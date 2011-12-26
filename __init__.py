@@ -27,14 +27,14 @@ def get_api_handler(access_token=None):
 
 def get_api(request):
     try:
-        userid = request.session.get(SESSION_KEY, u'')
+        userid = request.session.get(SESSION_KEY, 0)
         access_token = models.AccessToken.objects.get(userid=userid)
     except models.AccessToken.DoesNotExist:
         api = tweepy.api
-        api.is_authorized = (lambda : False)
+        api.is_authorized = (lambda: False)
     else:
         api = get_api_handler(access_token)
-        api.is_authorized = (lambda : True)
+        api.is_authorized = (lambda: True)
     finally:
         return api
 
