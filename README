@@ -1,0 +1,33 @@
+This is a plugin for useing twitter-api on Django.
+
+
+REQUIRED_PACKAGES
+    django
+    django.contrib.session
+    tweepy
+
+
+INSTALLATION
+    1. Add 'twitterapi.middlewares.TwitterAPIMiddleware' to MIDDLEWARE_CLASSES in settings.py.
+    2. Add 'twitterapi' to INSTALLED_APPS in settings.py.
+    3. Add 'TWITTER_CONSUMER_KEY' and 'TWITTER_COUSUMER_SECRET' to settings.py.
+       Values of these constant are OAuth consumer token which was issued at http://dev.twitter.com/
+
+
+USAGE
+    # urls.py
+    from django.conf.urls.defaults import patterns, include, url
+    urlpatterns = patterns('',
+        url(r'login', 'twitterapi.views.login'),
+        url(r'authorization', 'twitterapi.views.authorization'), #  OAuth callback URL.
+        url(r'logout', 'twitterapi.views.logout'),
+    )
+
+    =====================================================================
+    request.twitter_api is a instanse of tweepy.api.API.
+    Please read manual of tweepy for detailed usage.
+
+    def post_to_twitter(request);
+        ...
+        request.twitter_api.update_status(u'Hello, Twitter')
+        ...
